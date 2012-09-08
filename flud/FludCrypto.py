@@ -10,6 +10,7 @@ import binascii
 import operator
 import struct
 import time
+import Crypto.Random as Random
 from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA, pubkey
 from Crypto.Util.randpool import RandomPool
@@ -24,6 +25,7 @@ class FludRSA(RSA._RSAobj):
 
     def __init__(self, rsa):
         self.__setstate__(rsa.__getstate__())
+        self._randfunc = Random.new().read
 
     def publickey(self):
         return FludRSA(RSA.construct((self.n, self.e)))
